@@ -11,13 +11,14 @@ import java.util.Scanner;
  *
  * @author chgr
  */
-public class main {
-    public static void main(String[] args){
-        Scanner lukija = new Scanner( System.in );
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner lukija = new Scanner(System.in);
         System.out.println("Tervetuloa pelaamaan Muistipeliä!\nAloitetaan pelaamaalla yksinpeli 4:n ruudun laudalla.");
-        Lauta lauta=new Lauta(2,2,lukija);
+        Lauta lauta = new Lauta(2, 2, lukija);
         lauta.peliAlkaa();
-        
+
     }
-    
+
 }
