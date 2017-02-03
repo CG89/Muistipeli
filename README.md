@@ -4,5 +4,5 @@ Muistipelissä kilpailet itseäsi tai kaveriasi vastaan ja yrität arvaamalla ja
 
 ## Dokumentaatio
 
-[Aiheenkuvaus ja rakenne] (dokumentaatio/aiheenkuvausJaRakenne.md)
+[Aiheenkuvaus ja rakenne] (dokumentaatio/aiheenKuvausJaRakenne.md)
 [Tuntikirjanpito] (dokumentaatio/tuntikirjanpito.md)

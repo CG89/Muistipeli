@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.muistipeli.ohjelmalogiikka;
 
 import java.util.*;
@@ -34,6 +29,8 @@ public class Lauta {
         System.out.println("Laudalla on " + kortit.size() + " korttia numeroituna 0-" + (kortit.size() - 1));
         System.out.println("Valitse ensin yksi korteista syöttämällä kortin numero, minkä jälkeen näet, mikä kortti on kyseessä");
         while (true) {
+            System.out.println(piirraLauta());
+
             if (kaannaKortteja()) {
                 break;
             }
@@ -44,8 +41,8 @@ public class Lauta {
 
     public boolean kaannaKortteja() {
 
-        int ensimmaisenIndeksi = kysyKortinIndeksi();
-        int toisenIndeksi = kysyKortinIndeksi();
+        int ensimmaisenIndeksi = kysyKortinIndeksi(-1);
+        int toisenIndeksi = kysyKortinIndeksi(ensimmaisenIndeksi);
 
         if (!olikoSamat(ensimmaisenIndeksi, toisenIndeksi)) {
             System.out.println("Et löytänyt paria, yritä uudestaan");
@@ -61,33 +58,32 @@ public class Lauta {
 
     }
 
-//    public int toinenKortti() {
-//        System.out.print("Syötä toisen käännettävän kortin numero ja yritä löytää kääntämällesi kortille pari: ");
-//        while (!lukija.hasNextInt()) {
-//            System.out.print("Anna kelvollinen numero: ");
-//            lukija.next();
-//        }
-//        int toisenIndeksi = lukija.nextInt();
-//        System.out.println(kortit.get(toisenIndeksi));
-//        return toisenIndeksi;
-//    }
-    public int kysyKortinIndeksi() {
+    public int kysyKortinIndeksi(int ensimmaisenIndeksi) {
         System.out.print("Syötä käännettävän kortin numero: ");
         while (!lukija.hasNextInt()) {
             System.out.print("Anna kelvollinen numero: ");
             lukija.next();
         }
-        int ensimmaisenIndeksi = lukija.nextInt();
-        if (ensimmaisenIndeksi < 0) {
+        int annettuIndeksi = lukija.nextInt();
+        if (annettuIndeksi < 0) {
             System.out.println("Annoit liian pienen numeron!");
-            return kysyKortinIndeksi();
+            return kysyKortinIndeksi(ensimmaisenIndeksi);
         }
-        if (ensimmaisenIndeksi >= kortitKoko()) {
+        if (annettuIndeksi >= kortitKoko()) {
             System.out.println("Annoit liian suuren numeron!");
-            return kysyKortinIndeksi();
+            return kysyKortinIndeksi(ensimmaisenIndeksi);
         }
-        System.out.println(kortit.get(ensimmaisenIndeksi));
-        return ensimmaisenIndeksi;
+        if (kortit.get(annettuIndeksi) == "Löydetty") {
+            System.out.println("Valitsemasi kortti on jo löydetty, valitse toinen kortti!");
+            return kysyKortinIndeksi(ensimmaisenIndeksi);
+        }
+        if (annettuIndeksi == ensimmaisenIndeksi) {
+            System.out.println("Valitsit saman kortin kahdesti, valitse toinen kortti!");
+            return kysyKortinIndeksi(ensimmaisenIndeksi);
+        }
+
+        System.out.println(kortit.get(annettuIndeksi));
+        return annettuIndeksi;
     }
 
     public void kerroKortit() {
@@ -112,6 +108,21 @@ public class Lauta {
 
     public int kortitKoko() {
         return kortit.size();
+    }
+
+    public String piirraLauta() {
+
+        String piirrettavatKortit = "";
+        for (int i = 0; i < kortitKoko(); i++) {
+
+            if (kortit.get(i) == "Löydetty") {
+                piirrettavatKortit += "|X| ";
+            } else {
+                piirrettavatKortit += "|" + i + "| ";
+            }
+        }
+        return piirrettavatKortit;
+
     }
 
 }

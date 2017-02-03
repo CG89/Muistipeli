@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package muistipeli.muistipeli.ohjelmalogiikka;
 
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
@@ -14,13 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author chgr
- */
-public class MuistipeliTest {
+public class LautaTest {
 
-   
+    Lauta lauta;
 
     @Test
     public void lautaKonstruktoriLuoJaTayttaaKortitOikein() {
@@ -33,14 +25,31 @@ public class MuistipeliTest {
     public void kysyKortinIndeksiysyyNumeroaKunnesNumeroAnnettu() {
         Scanner lukija = new Scanner("a1 a a 1");
         lauta = new Lauta(2, 2, lukija);
-        assertEquals(1, lauta.kysyKortinIndeksi());
+        assertEquals(1, lauta.kysyKortinIndeksi(-1));
     }
 
     @Test
     public void kysyKortinIndeksiKysyyNumeroaKunnesOikeanKokoinenNumeroAnnettu() {
         Scanner lukija = new Scanner("-1 4 100 1");
         lauta = new Lauta(2, 2, lukija);
-        assertEquals(1, lauta.kysyKortinIndeksi());
+        assertEquals(1, lauta.kysyKortinIndeksi(-1));
+    }
+
+    @Test
+    public void kysyKortinIndeksiKysyyNumeroaKunnesEiLoydettyNumeroAnnettu() {
+        Scanner lukija = new Scanner("0 1 0 1 2 0 3 4");
+        lauta = new Lauta(4, 4, lukija);
+        lauta.kaannaKortteja();
+        lauta.kaannaKortteja();
+
+        assertEquals(4, lauta.kysyKortinIndeksi(-1));
+    }
+
+    @Test
+    public void kysyKortinIndeksiEiHyvaksyEnsimmaisenaAnnettuaNumeroaToiseksiKortiksi() {
+        Scanner lukija = new Scanner("0 0 1");
+        Lauta lauta = new Lauta(4, 4, lukija);
+        assertEquals(1, lauta.kysyKortinIndeksi(lauta.kysyKortinIndeksi(-1)));
     }
 
     @Test
@@ -72,6 +81,14 @@ public class MuistipeliTest {
         lauta.kaannaKortteja();
         lauta.kaannaKortteja();
         assertEquals(true, lauta.kaannaKortteja());
+
+    }
+
+    @Test
+    public void piirraLautaPiirtaaLaudanOikeinVaikeusasteella3() {
+        Scanner lukija = new Scanner("0 1 2 3 4 5");
+        lauta = new Lauta(4, 4, lukija);
+        assertEquals("|0| |1| |2| |3| |4| |5| |6| |7| |8| |9| |10| |11| |12| |13| |14| |15| ", lauta.piirraLauta());
 
     }
 }
