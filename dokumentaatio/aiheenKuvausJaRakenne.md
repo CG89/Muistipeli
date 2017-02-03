@@ -12,4 +12,4 @@ Peli kysyy alussa vaikeusastetta (montako kuvaparia) ja montako pelaajaa (1 tai 
 **Luokkakaavio**
 
 ![Määrittelyvaiheen luokkakaavio](http://yuml.me/3c4f520e)
-![Muistipeli tilanne DL3](/home/chgr/OhHa/Muistipeli/dokumentaatio/MuistipeliTilanneDL3.png)
+![Muistipeli tilanne DL3](https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/MuistipeliTilanneDL3.png)
