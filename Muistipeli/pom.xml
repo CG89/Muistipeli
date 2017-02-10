@@ -37,10 +37,12 @@
                     <targetClasses>
                         <param>muistipeli.muistipeli.kayttoliittyma.*</param>
                         <param>muistipeli.muistipeli.ohjelmalogiikka.*</param>
+                        <param>muistipeli.muistipeli.data.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>muistipeli.muistipeli.kayttoliittyma.*</param>
                         <param>muistipeli.muistipeli.ohjelmalogiikka.*</param>
+                        <param>muistipeli.muistipeli.data.*</param>
                     </targetTests>
                 </configuration>
             </plugin>
@@ -57,6 +59,11 @@
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+            </plugin> 
         </plugins>
     </build>
 </project>
