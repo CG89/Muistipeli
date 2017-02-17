@@ -35,14 +35,12 @@
                 <version>1.1.8</version>
                 <configuration>
                     <targetClasses>
-                        <param>muistipeli.muistipeli.kayttoliittyma.*</param>
-                        <param>muistipeli.muistipeli.ohjelmalogiikka.*</param>
-                        <param>muistipeli.muistipeli.data.*</param>
+                        <param>muistipeli.ohjelmalogiikka.*</param>
+                        <param>muistipeli.data.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>muistipeli.muistipeli.kayttoliittyma.*</param>
-                        <param>muistipeli.muistipeli.ohjelmalogiikka.*</param>
-                        <param>muistipeli.muistipeli.data.*</param>
+                        <param>muistipeli.ohjelmalogiikka.*</param>
+                        <param>muistipeli.data.*</param>
                     </targetTests>
                 </configuration>
             </plugin>

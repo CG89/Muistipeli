@@ -5,3 +5,4 @@ Päivä | Tunnit | Kuvaus
 02.02.2017 | 10h | Ohjelmoinnin suunnittelua ja aloittaminen, testien tekoa, määrittelyvaiheen luokkakaavio
 03.02.2017 | 7h | Ohjelman perustoiminnan viimeistely, testien tekoa
 10.02.2017 | 8h | Ui ja logiikan erittelyä, testejä
+17.02.2017 | 10h | Graafisen käyttöliittymän tekoa, javadoc, testejä, sekvenssikaaviot
