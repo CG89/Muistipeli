@@ -11,5 +11,6 @@ Peli kysyy alussa vaikeusastetta (1, 2 tai 3) ja montako pelaajaa (1 tai 2). Pel
 
 **Luokkakaavio**
 
-![Määrittelyvaiheen luokkakaavio](http://yuml.me/3c4f520e)
-![Muistipeli tilanne DL3](https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/MuistipeliTilanneDL3.png)
+![Muistipelin luokkakaavio](https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/MuistipeliLuokkakaavio.png?raw=true)
+![Pelaajamäärän valinta -sekvenssikaavio](https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/PelaajamaaranValintaSekvenssikaavio.png?raw=true)
+![Vaikeusasteen valinta -sekvenssikaavio](https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/VaikeusasteenValintaSekvenssikaavio.png?raw=true)
