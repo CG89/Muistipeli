@@ -1,7 +1,12 @@
 package muistipeli.data;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import muistipeli.ohjelmalogiikka.Lauta;
 
 public class Tietokanta {
@@ -43,6 +48,8 @@ public class Tietokanta {
         for (int i = 0; i < this.nimet.size(); i++) {
             Kortti kortti1 = new Kortti(nimet.get(i));
             Kortti kortti2 = new Kortti(nimet.get(i));
+            lisaaKuvaKortille(kortti1, i);
+            lisaaKuvaKortille(kortti2, i);
             kortit.add(kortti1);
             kortit.add(kortti2);
 
@@ -56,6 +63,16 @@ public class Tietokanta {
     public void korttienIndeksointi(ArrayList<Kortti> indeksoitavatKortit) {
         for (int i = 0; i < indeksoitavatKortit.size(); i++) {
             indeksoitavatKortit.get(i).setIndeksi(i);
+        }
+    }
+    
+    public void lisaaKuvaKortille(Kortti kortti,int indeksi){
+        String tiedostonimi="koira"+indeksi+".jpg";
+        InputStream is = getClass().getClassLoader().getResourceAsStream(tiedostonimi);
+        try {
+            kortti.setKuva(ImageIO.read(is));
+        } catch (IOException ex) {
+            Logger.getLogger(Kortti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

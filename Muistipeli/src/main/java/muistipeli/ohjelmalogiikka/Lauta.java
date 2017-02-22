@@ -167,7 +167,9 @@ public class Lauta {
             }
             ensimmainenAvattuKortti.setAvattu(false);
             toinenAvattuKortti.setAvattu(false);
+            ensimmainenPainettuNappi.setIcon(null);
             ensimmainenPainettuNappi.setText("" + ensimmainenAvattuKortti.getIndeksi());
+            toinenPainettuNappi.setIcon(null);
             toinenPainettuNappi.setText("" + toinenAvattuKortti.getIndeksi());
             ensimmainenAvattuKortti = null;
             toinenAvattuKortti = null;

@@ -18,7 +18,7 @@ public class Kortti {
     private int indeksi;
     private boolean loydetty;
     private boolean avattu;
-//    private BufferedImage kuva;
+    private BufferedImage kuva;
 
     /**
      * Konstruktori luo kortin antaen sille nimeksi parametrina saadun
@@ -31,6 +31,7 @@ public class Kortti {
         this.indeksi = -1;
         this.loydetty = false;
         this.avattu = false;
+        this.kuva=null;
 //        InputStream is = getClass().getClassLoader().getResourceAsStream("koira1.jpg");
 //        try {
 //            kuva = ImageIO.read(is);
@@ -42,6 +43,7 @@ public class Kortti {
 
 
     }
+    
 
     
     public String getNimi() {
@@ -80,13 +82,19 @@ public class Kortti {
     
     
     
-//    public BufferedImage getKuva(){
-//        return this.kuva;
-//    }
+    public BufferedImage getKuva(){
+        return this.kuva;
+    }
+    
+    public void setKuva(BufferedImage bf){
+        this.kuva=bf;
+    }
 
    
     @Override
     public String toString() {
         return nimi;
     }
+
+
 }

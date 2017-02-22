@@ -35,7 +35,7 @@ public class GraafinenKayttoliittyma implements Runnable {
     public void run() {
         menunLuonti();
         frame = new JFrame("Muistipeli");
-        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(1000, 800));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame.getContentPane());
         frame.setJMenuBar(menuBar);
