@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerListener;
 import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -37,7 +39,9 @@ public class Nappikuuntelija implements ActionListener {
         lauta.suljeVanhatAvatutKortit();
         frame.setTitle(lauta.korttiKaannetty(indeksi, nappi));
         nappi.setText(lauta.getKortit().get(indeksi).toString());
+//        nappi.setIcon(new ImageIcon(lauta.getKortit().get(indeksi).getKuva()));
 
     }
-
+    
+   
 }

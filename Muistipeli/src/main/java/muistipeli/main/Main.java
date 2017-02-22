@@ -10,7 +10,7 @@ import muistipeli.ohjelmalogiikka.Lauta;
 public class Main {
 
     public static void main(String[] args) {
-        Lauta lauta=new Lauta();
+        Lauta lauta=new Lauta(4);
         lauta.sekoitaKortit();
         lauta.korttienIndeksointi();
         GraafinenKayttoliittyma kayttoliittyma = new GraafinenKayttoliittyma(lauta);

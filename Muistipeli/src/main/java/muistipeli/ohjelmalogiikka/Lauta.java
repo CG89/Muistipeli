@@ -16,16 +16,20 @@ public class Lauta {
     private Kortti toinenAvattuKortti;
     private JButton ensimmainenPainettuNappi;
     private JButton toinenPainettuNappi;
+    private int vaikeusaste;
 
     /**
-     * Konstruktori luo listan kortteja, antaa niille nimet ja indeksoi ne.
+     * Konstruktori luo listan kortteja, antaa niille nimet, indeksoi ne ja asettaa vaikeusasteeksi saamansa luvun.
+     * @param vaikeusaste Asetettava vaikeusaste laudalle
      */
-    public Lauta() {
+    public Lauta(int vaikeusaste) {
+        this.vaikeusaste=vaikeusaste;
         korttienNimienLuonti();
         korttienLuominen();
         korttienIndeksointi();
         ensimmainenAvattuKortti = null;
         toinenAvattuKortti = null;
+        
 
     }
 
@@ -34,14 +38,16 @@ public class Lauta {
      */
     public void korttienNimienLuonti() {
         this.nimet = new ArrayList();
-        nimet.add("A");
-        nimet.add("B");
-        nimet.add("C");
-        nimet.add("D");
-        nimet.add("E");
-        nimet.add("F");
-        nimet.add("G");
-        nimet.add("H");
+        nimet.add("♥");
+        nimet.add("웃");
+        nimet.add("☠");
+        nimet.add("✿");
+        nimet.add("☃");
+        nimet.add("☼");
+        nimet.add("☢");
+        nimet.add("☯");
+        nimet.add("✈");
+        nimet.add("✯");
     }
 
     /**
@@ -50,10 +56,12 @@ public class Lauta {
      */
     public void korttienLuominen() {
         kortit = new ArrayList();
-        for (int i = 0; i < 8; i++) {
-            Kortti kortti1 = new Kortti(nimet.get(0));
-            Kortti kortti2 = new Kortti(nimet.get(0));
-            nimet.remove(0);
+        
+        for (int i = 0; i < this.vaikeusaste*2; i++) {
+            Kortti kortti1 = new Kortti(nimet.get(i));
+            Kortti kortti2 = new Kortti(nimet.get(i));
+            
+            
             kortit.add(kortti1);
             kortit.add(kortti2);
 
@@ -183,6 +191,8 @@ public class Lauta {
             toinenAvattuKortti.setLoydetty(true);
             toinenAvattuKortti.setAvattu(false);
             parejaLoydetty++;
+            ensimmainenPainettuNappi.setEnabled(false);
+            toinenPainettuNappi.setEnabled(false);
             return true;
         } else {
             return false;
@@ -217,6 +227,7 @@ public class Lauta {
         }
         return false;
     }
+    
 
     public void setEnsimmainenPainettuNappi(JButton ensimmainenPainettuNappi) {
         this.ensimmainenPainettuNappi = ensimmainenPainettuNappi;
@@ -264,6 +275,10 @@ public class Lauta {
 
     public void setParejaLoydetty(int loydetty) {
         this.parejaLoydetty = loydetty;
+    }
+    
+    public int getVaikeusaste(){
+        return this.vaikeusaste;
     }
 
 }
