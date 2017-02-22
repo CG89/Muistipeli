@@ -3,80 +3,29 @@ package muistipeli.ohjelmalogiikka;
 import java.util.*;
 import javax.swing.JButton;
 import muistipeli.data.Kortti;
+import muistipeli.data.Tietokanta;
 
 /**
  * Luokka toimii ohjelman logiikkana.
  */
 public class Lauta {
 
-    private ArrayList<Kortti> kortit;
-    private ArrayList<String> nimet;
     private int parejaLoydetty;
     private Kortti ensimmainenAvattuKortti;
     private Kortti toinenAvattuKortti;
     private JButton ensimmainenPainettuNappi;
     private JButton toinenPainettuNappi;
     private int vaikeusaste;
+    private Tietokanta tietokanta;
 
     /**
-     * Konstruktori luo listan kortteja, antaa niille nimet, indeksoi ne ja asettaa vaikeusasteeksi saamansa luvun.
+     * Konstruktori luo listan kortteja, antaa niille nimet, indeksoi ne ja
+     * asettaa vaikeusasteeksi saamansa luvun.
+     *
      * @param vaikeusaste Asetettava vaikeusaste laudalle
      */
-    public Lauta(int vaikeusaste) {
-        this.vaikeusaste=vaikeusaste;
-        korttienNimienLuonti();
-        korttienLuominen();
-        korttienIndeksointi();
-        ensimmainenAvattuKortti = null;
-        toinenAvattuKortti = null;
-        
-
-    }
-
-    /**
-     * Metodi luo listan nimistä ja laittaa sinne nimiä.
-     */
-    public void korttienNimienLuonti() {
-        this.nimet = new ArrayList();
-        nimet.add("♥");
-        nimet.add("웃");
-        nimet.add("☠");
-        nimet.add("✿");
-        nimet.add("☃");
-        nimet.add("☼");
-        nimet.add("☢");
-        nimet.add("☯");
-        nimet.add("✈");
-        nimet.add("✯");
-    }
-
-    /**
-     * Metodi luo kortit-listan, lisää sinne pareittain kortteja, jollai on sama
-     * nimi.
-     */
-    public void korttienLuominen() {
-        kortit = new ArrayList();
-        
-        for (int i = 0; i < this.vaikeusaste*2; i++) {
-            Kortti kortti1 = new Kortti(nimet.get(i));
-            Kortti kortti2 = new Kortti(nimet.get(i));
-            
-            
-            kortit.add(kortti1);
-            kortit.add(kortti2);
-
-        }
-    }
-
-    /**
-     * Metodi asettaa kortit-listan korteille indeksit perustuen niiden
-     * indeksiin listalla.
-     */
-    public void korttienIndeksointi() {
-        for (int i = 0; i < kortit.size(); i++) {
-            kortit.get(i).setIndeksi(i);
-        }
-
+    public Lauta(Tietokanta tietokanta) {
+        this.tietokanta = tietokanta;
     }
 
     /**
@@ -104,7 +53,7 @@ public class Lauta {
             } else {
                 toinenKorttiValittu(kaannetynKortinIndeksi, nappi);
                 if (olikoSamatkortit(ensimmainenAvattuKortti, toinenAvattuKortti)) {
-                    if (parejaLoydetty == kortit.size() / 2) {
+                    if (parejaLoydetty == this.tietokanta.getSekoitetutKortit().size() / 2) {
                         return "Voitit pelin, onneksi olkoon!";
                     }
                     return "Löysit parin, hienoa!";
@@ -125,10 +74,10 @@ public class Lauta {
      * @return Kortin tilanteen mukainen viesti
      */
     public String olikoKorttiJoKaannettyTaiLoydetty(int kaannetynKortinIndeksi) {
-        if (kortit.get(kaannetynKortinIndeksi).getAvattu()) {
+        if (this.tietokanta.getSekoitetutKortit().get(kaannetynKortinIndeksi).getAvattu()) {
             return "Valitsit saman kortin uudestaan, valitse toinen kortti!";
         }
-        if (kortit.get(kaannetynKortinIndeksi).getLoydetty()) {
+        if (this.tietokanta.getSekoitetutKortit().get(kaannetynKortinIndeksi).getLoydetty()) {
             return "Valitsit jo löydetyn kortin, valitse toinen kortti!";
         } else {
             return "kelvollinen kortti";
@@ -147,7 +96,7 @@ public class Lauta {
      * toisen kortin
      */
     public String ensimmainenKorttiValittu(int kaannetynKortinIndeksi, JButton nappi) {
-        ensimmainenAvattuKortti = kortit.get(kaannetynKortinIndeksi);
+        ensimmainenAvattuKortti = this.tietokanta.getSekoitetutKortit().get(kaannetynKortinIndeksi);
         ensimmainenPainettuNappi = nappi;
         ensimmainenAvattuKortti.setAvattu(true);
         return "Yritä löytää kääntämällesi kortille pari";
@@ -162,7 +111,7 @@ public class Lauta {
      * @param nappi Korttiin liittyvä nappi
      */
     public void toinenKorttiValittu(int kaannetynKortinIndeksi, JButton nappi) {
-        toinenAvattuKortti = kortit.get(kaannetynKortinIndeksi);
+        toinenAvattuKortti = this.tietokanta.getSekoitetutKortit().get(kaannetynKortinIndeksi);
         toinenPainettuNappi = nappi;
         toinenAvattuKortti.setAvattu(true);
     }
@@ -171,7 +120,7 @@ public class Lauta {
      * Metodi sekoittaa listan kortit.
      */
     public void sekoitaKortit() {
-        Collections.shuffle(kortit);
+        
     }
 
     /**
@@ -227,7 +176,22 @@ public class Lauta {
         }
         return false;
     }
-    
+
+    public void uusiPeli(int vaikeusaste) {
+        this.vaikeusaste = vaikeusaste;
+        this.ensimmainenAvattuKortti = null;
+        this.ensimmainenPainettuNappi = null;
+        this.toinenAvattuKortti = null;
+        this.toinenPainettuNappi = null;
+        for (int i = 0; i < this.tietokanta.getKortit().size(); i++) {
+            this.tietokanta.getKortit().get(i).setAvattu(false);
+            this.tietokanta.getKortit().get(i).setLoydetty(false);
+        }
+        
+        this.parejaLoydetty = 0;
+        this.tietokanta.luoSekoitetutKortit(vaikeusaste);
+
+    }
 
     public void setEnsimmainenPainettuNappi(JButton ensimmainenPainettuNappi) {
         this.ensimmainenPainettuNappi = ensimmainenPainettuNappi;
@@ -249,14 +213,6 @@ public class Lauta {
         return parejaLoydetty;
     }
 
-    public ArrayList getNimet() {
-        return this.nimet;
-    }
-
-    public ArrayList<Kortti> getKortit() {
-        return this.kortit;
-    }
-
     public Kortti getEnsimmainenAvattuKortti() {
         return this.ensimmainenAvattuKortti;
     }
@@ -276,9 +232,13 @@ public class Lauta {
     public void setParejaLoydetty(int loydetty) {
         this.parejaLoydetty = loydetty;
     }
-    
-    public int getVaikeusaste(){
+
+    public int getVaikeusaste() {
         return this.vaikeusaste;
+    }
+
+    public Tietokanta getTietokanta() {
+        return this.tietokanta;
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 import javax.swing.JButton;
 import muistipeli.data.Kortti;
+import muistipeli.data.Tietokanta;
 import muistipeli.ohjelmalogiikka.Lauta;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,33 +25,24 @@ public class LautaTest {
 //    }
     @Before
     public void setUp() {
-        lauta=new Lauta(4);
+        lauta=new Lauta(new Tietokanta());
+        lauta.uusiPeli(4);
+        lauta.getTietokanta().setSekoitetutkortit(lauta.getTietokanta().getKortit());
+        
     }
 
-    @Test
-    public void korttienNimeaminenLuoNimetlistan() {     
-        assertNotSame(null, lauta.getNimet());
-    }
-
-    @Test
-    public void korttienLuominenluoKortitlistan() {
-        assertNotSame(null, lauta.getKortit().size());
-    }
-
-    @Test
-    public void korttienIndeksointiIndeksoiKortit() {
-        assertEquals(0, lauta.getKortit().get(0).getIndeksi());
-    }
+    
 
     @Test
     public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKorttiKaannetty() {
-        lauta.getKortit().get(0).setAvattu(true);
+        
+        lauta.getTietokanta().getSekoitetutKortit().get(0).setAvattu(true);
         assertEquals("Valitsit saman kortin uudestaan, valitse toinen kortti!", lauta.olikoKorttiJoKaannettyTaiLoydetty(0));
     }
 
     @Test
     public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKorttiLoydetty() {        
-        lauta.getKortit().get(0).setLoydetty(true);
+        lauta.getTietokanta().getSekoitetutKortit().get(0).setLoydetty(true);
         assertEquals("Valitsit jo löydetyn kortin, valitse toinen kortti!", lauta.olikoKorttiJoKaannettyTaiLoydetty(0));
     }
 
@@ -69,7 +61,7 @@ public class LautaTest {
     public void ensimmainenKorttiValittuAsettaaEnsimmaisenKortinOikein() {
         JButton nappi = new JButton();
         lauta.ensimmainenKorttiValittu(0, nappi);
-        assertEquals(lauta.getKortit().get(0), lauta.getEnsimmainenAvattuKortti());
+        assertEquals(lauta.getTietokanta().getSekoitetutKortit().get(0), lauta.getEnsimmainenAvattuKortti());
     }
 
     @Test
@@ -83,14 +75,14 @@ public class LautaTest {
     public void ensimmainenKorttiValittuAsettaaAvatunKortinAvatuksi() {
         JButton nappi = new JButton();
         lauta.ensimmainenKorttiValittu(0, nappi);
-        assertEquals(true, lauta.getKortit().get(0).getAvattu());
+        assertEquals(true, lauta.getTietokanta().getSekoitetutKortit().get(0).getAvattu());
     }
 
     @Test
     public void toinenKorttiValittuAsettaaToisenAvatunKortinOikein() {
         JButton nappi = new JButton();
         lauta.toinenKorttiValittu(0, nappi);
-        assertEquals(lauta.getKortit().get(0), lauta.getToinenAvattuKortti());
+        assertEquals(lauta.getTietokanta().getSekoitetutKortit().get(0), lauta.getToinenAvattuKortti());
     }
 
     @Test
@@ -111,21 +103,21 @@ public class LautaTest {
     public void olikoSamatKortitPalauttaaOikeanTotuusarvonKunKortitSamat() {
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
-        lauta.setToinenAvattuKortti(lauta.getKortit().get(1));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(1));
         assertEquals(true, lauta.olikoSamatkortit(lauta.getEnsimmainenAvattuKortti(), lauta.getToinenAvattuKortti()));
     }
 
     @Test
     public void olikoSamatKortitPalauttaaOikeanTotuusarvonKunKortitEri() {
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
-        lauta.setToinenAvattuKortti(lauta.getKortit().get(2));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
         assertEquals(false, lauta.olikoSamatkortit(lauta.getEnsimmainenAvattuKortti(), lauta.getToinenAvattuKortti()));
     }
 
     @Test
     public void korttiKaannettyPalauttaaOikeanViestinKunAvattuKorttiKaannetty() {
-        lauta.getKortit().get(0).setAvattu(true);
+        lauta.getTietokanta().getKortit().get(0).setAvattu(true);
         JButton nappi = new JButton();
         assertEquals("Valitsit saman kortin uudestaan, valitse toinen kortti!", lauta.korttiKaannetty(0, nappi));
     }
@@ -140,8 +132,8 @@ public class LautaTest {
     public void korttiKaannettyPalauttaaOikeanViestinKunViimeinenPariAvattu() {
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
-        lauta.setParejaLoydetty((lauta.getKortit().size() / 2) - 1);
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setParejaLoydetty((lauta.getTietokanta().getKortit().size() / 2) - 1);
         JButton nappi = new JButton();
         assertEquals("Voitit pelin, onneksi olkoon!", lauta.korttiKaannetty(1, nappi));
     }
@@ -150,7 +142,7 @@ public class LautaTest {
     public void korttiKaannettyPalauttaaOikeanViestinKunPariAvattu() {
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
         JButton nappi = new JButton();
         assertEquals("Löysit parin, hienoa!", lauta.korttiKaannetty(1, nappi));
     }
@@ -159,15 +151,15 @@ public class LautaTest {
     public void korttiKaannettyPalauttaaOikeanViestinKunPariaEiAvattu() {
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
         JButton nappi = new JButton();
         assertEquals("Et löytänyt paria", lauta.korttiKaannetty(2, nappi));
     }
 
     @Test
     public void suljeVanhatAvatutKortitPalauttaaOikeanTotuusArvonKunPariaEiLoytynyt() {
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
-        lauta.setToinenAvattuKortti(lauta.getKortit().get(2));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
         assertEquals(true, lauta.suljeVanhatAvatutKortit());
@@ -175,7 +167,7 @@ public class LautaTest {
 
     @Test
     public void suljeVanhatAvatutKorttitPalauttaaFalseKunKahtaKorttiaEiOleVielaAvattu() {
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
         assertEquals(false, lauta.suljeVanhatAvatutKortit());
@@ -183,10 +175,10 @@ public class LautaTest {
 
     @Test
     public void suljeVanhatAvatutKortitEiSuljeLoydettyjaKortteja() {
-        lauta.setEnsimmainenAvattuKortti(lauta.getKortit().get(0));
-        lauta.getKortit().get(0).setLoydetty(true);
-        lauta.setToinenAvattuKortti(lauta.getKortit().get(1));
-        lauta.getKortit().get(1).setLoydetty(true);
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.getTietokanta().getKortit().get(0).setLoydetty(true);
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(1));
+        lauta.getTietokanta().getKortit().get(1).setLoydetty(true);
         lauta.setEnsimmainenPainettuNappi(new JButton());
         lauta.setToinenPainettuNappi(new JButton());
         assertEquals(false, lauta.suljeVanhatAvatutKortit());
@@ -235,18 +227,5 @@ public class LautaTest {
 //    }
 //    
 
-    @Test
-    public void sekoitaKortitSekoittaaKortit() {
-        Kortti kortti1 = lauta.getKortit().get(0);
-        Kortti kortti2 = lauta.getKortit().get(0);
-        while (true) {
-            lauta.sekoitaKortit();
-            lauta.korttienIndeksointi();
-            kortti2 = lauta.getKortit().get(0);
-            if (kortti1 != kortti2) {
-                break;
-            }
-        }
-        assertNotEquals(kortti1, kortti2);
-    }
+   
 }

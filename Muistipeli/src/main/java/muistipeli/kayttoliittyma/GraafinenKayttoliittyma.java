@@ -76,7 +76,7 @@ public class GraafinenKayttoliittyma implements Runnable {
     public void luoKomponentit(Container container) {
         GridLayout layout = new GridLayout(lauta.getVaikeusaste(), lauta.getVaikeusaste(), 0, 0);
         container.setLayout(layout);
-        for (int i = 0; i < lauta.getKortit().size(); i++) {
+        for (int i = 0; i < lauta.getVaikeusaste()*4; i++) {
             String j = String.valueOf(i);
             JButton lisattava = new JButton(j);
             lisattava.setFont(new Font("Arial", Font.PLAIN, 80));

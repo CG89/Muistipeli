@@ -38,8 +38,8 @@ public class Nappikuuntelija implements ActionListener {
 
         lauta.suljeVanhatAvatutKortit();
         frame.setTitle(lauta.korttiKaannetty(indeksi, nappi));
-        nappi.setText(lauta.getKortit().get(indeksi).toString());
-//        nappi.setIcon(new ImageIcon(lauta.getKortit().get(indeksi).getKuva()));
+        nappi.setText(lauta.getTietokanta().getSekoitetutKortit().get(indeksi).toString());
+//        nappi.setIcon(new ImageIcon(lauta.getSekoitetutKortit().get(indeksi).getKuva()));
 
     }
     

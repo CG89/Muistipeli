@@ -33,12 +33,10 @@ public class Menukuuntelija implements ActionListener {
         container.removeAll();
         this.napinNumero=mikaNappi(menuItem);
         if(napinNumero>2&&napinNumero<6){
-            gui.setLauta(new Lauta(napinNumero));
+            gui.getLauta().uusiPeli(napinNumero);
         }else{
-            gui.setLauta(new Lauta(gui.getLauta().getVaikeusaste()));
+            gui.getLauta().uusiPeli(gui.getLauta().getVaikeusaste());
         }
-        gui.getLauta().sekoitaKortit();
-        gui.getLauta().korttienIndeksointi();
         gui.luoKomponentit(container);
         gui.getFrame().pack();
     }

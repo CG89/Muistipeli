@@ -1,6 +1,7 @@
 package muistipeli.main;
 
 import javax.swing.SwingUtilities;
+import muistipeli.data.Tietokanta;
 import muistipeli.kayttoliittyma.GraafinenKayttoliittyma;
 import muistipeli.ohjelmalogiikka.Lauta;
 
@@ -10,9 +11,8 @@ import muistipeli.ohjelmalogiikka.Lauta;
 public class Main {
 
     public static void main(String[] args) {
-        Lauta lauta=new Lauta(4);
-        lauta.sekoitaKortit();
-        lauta.korttienIndeksointi();
+        Lauta lauta=new Lauta(new Tietokanta());
+        lauta.uusiPeli(4);
         GraafinenKayttoliittyma kayttoliittyma = new GraafinenKayttoliittyma(lauta);
         SwingUtilities.invokeLater(kayttoliittyma);
 
