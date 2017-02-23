@@ -1,6 +1,5 @@
 package muistipeli.ohjelmalogiikka;
 
-import java.util.*;
 import javax.swing.JButton;
 import muistipeli.data.Kortti;
 import muistipeli.data.Tietokanta;
@@ -19,10 +18,10 @@ public class Lauta {
     private Tietokanta tietokanta;
 
     /**
-     * Konstruktori luo listan kortteja, antaa niille nimet, indeksoi ne ja
-     * asettaa vaikeusasteeksi saamansa luvun.
+     * Konstruktori tallettaa parametrina saamansa Tietokantaolion
+     * oliomuuttujaan.
      *
-     * @param vaikeusaste Asetettava vaikeusaste laudalle
+     * @param tietokanta Talletettava Tietokantaolio.
      */
     public Lauta(Tietokanta tietokanta) {
         this.tietokanta = tietokanta;
@@ -36,9 +35,9 @@ public class Lauta {
      * siitä pelaajalle.
      *
      * @param kaannetynKortinIndeksi painetun napin indeksi, jota käytetään
-     * kortit-listan indeksinä
+     * sekoitetutKortit-listan indeksinä
      * @param nappi painettu JButton, johon piirretään kelvollisen kortin
-     * tapauksessa kortin nimi
+     * tapauksessa kortin kuva
      * @return Pelaajalle näytettävä viesti, joka kertoo oliko painettu nappi
      * kelvollinen ja löysikö hän parin
      */
@@ -70,7 +69,7 @@ public class Lauta {
      * käännetty tai avattu ja palauttaa tilanteenmukaisen viestin.
      *
      * @param kaannetynKortinIndeksi Tarkistettavana olevan kortin indeksi
-     * kortit-listalla
+     * sekoitetutKortit-listalla
      * @return Kortin tilanteen mukainen viesti
      */
     public String olikoKorttiJoKaannettyTaiLoydetty(int kaannetynKortinIndeksi) {
@@ -87,10 +86,12 @@ public class Lauta {
     /**
      * Jos ensimmaista korttia ei ole vielä käännetty, kutsutaan tätä metodia,
      * mikä asettaa parametrin mukaisessa indeksissa olevan kortin
-     * kortit-listalta ensimmäiseksi avatuksi kortiksi, asettaa sen kortin tilan
-     * avatuksi ja siihen liittyvän napin ensimmäiseksi painetuksi napiksi.
+     * sekoitetutKortit-listalta ensimmäiseksi avatuksi kortiksi, asettaa sen
+     * kortin tilan avatuksi ja siihen liittyvän napin ensimmäiseksi painetuksi
+     * napiksi.
      *
-     * @param kaannetynKortinIndeksi Kortit-listalta etsittävän kortin indeksi
+     * @param kaannetynKortinIndeksi SekoitetutKortit-listalta etsittävän kortin
+     * indeksi
      * @param nappi Korttiin liittyvä nappi
      * @return palauttaa pelaajalle viestin, joka kehottaa valitsemaan vielä
      * toisen kortin
@@ -107,7 +108,8 @@ public class Lauta {
      * napin ja asettaa ne toiseksi avatuksi/painetuksi ja kortin tilan
      * avatuksi.
      *
-     * @param kaannetynKortinIndeksi Kortit-listalla olevan kortin indeksi
+     * @param kaannetynKortinIndeksi SekoitetutKortit-listalla olevan kortin
+     * indeksi
      * @param nappi Korttiin liittyvä nappi
      */
     public void toinenKorttiValittu(int kaannetynKortinIndeksi, JButton nappi) {
@@ -117,17 +119,11 @@ public class Lauta {
     }
 
     /**
-     * Metodi sekoittaa listan kortit.
-     */
-    public void sekoitaKortit() {
-        
-    }
-
-    /**
      * Metodi vertaa saamiensa korttien nimiä ja indeksejä ja sen perusteella
      * toteaa ne joko pariksi tai ei. Jos pari löytyy, muuttaa metodi korttien
-     * tilan avatusta löydetyksi, kasvattaa parejaLoydetty-oliomuuttujaa yhdellä
-     * ja palauttaa true. Jos kortit eivät ole pari, palauttaa metodi false.
+     * tilan avatusta löydetyksi, kasvattaa parejaLoydetty-oliomuuttujaa
+     * yhdellä, poistaa kortteihin liittyvät napit käytöstä ja palauttaa true.
+     * Jos kortit eivät ole pari, palauttaa metodi false.
      *
      * @param ensimmainenAvattuKortti ensimmäisenä avattu kortti
      * @param toinenAvattuKortti toisena avattu kortti
@@ -149,14 +145,13 @@ public class Lauta {
     }
 
     /**
-     * Metodi kertoo NappiKuuntelijalle, että sen pitää kääntää edelliset kaksi
-     * nappia, jotka liittyvät kahteen viimeksi avattuihin kortteihin, kiinni,
-     * jos ne eivät olleet pari.
-     *
+     * Metodi poistaa Laudan oliomuuttujista ensimmäisen ja toisen käännetyn
+     * kortin, jos molemmissa on kortit. Mikäli kortit eivät olleet parit,
+     * metodi myös palauttaa niiden avattu-statuksen falseen, poistaa kuvan ja
+     * piirtä nappeihin selkäpuolen takaisin.
      *
      * @return boolean true, jos kaksi korttia on jo avattuna, eivätkä ne ole
      * samoja.
-     *
      */
     public boolean suljeVanhatAvatutKortit() {
         if (ensimmainenAvattuKortti != null && toinenAvattuKortti != null) {
@@ -179,6 +174,15 @@ public class Lauta {
         return false;
     }
 
+    /**
+     * Metodi alustaa uuden pelin asettamalla vaikeusasteeksi saamansa
+     * parametrin, asettamalla nulliksi laudan kortti- ja nappioliomuuttujat,
+     * asettamalla falseksi Tietokannan kortit-listan korttien avattu- ja
+     * löydettytilat, asettamalla parejaLöydetty nollaksi ja kutsumalla
+     * Tietokantaluokan metodia luoSekoitetutKortit(int vaikeusaste).
+     *
+     * @param vaikeusaste Talletettava vaikeusaste
+     */
     public void uusiPeli(int vaikeusaste) {
         this.vaikeusaste = vaikeusaste;
         this.ensimmainenAvattuKortti = null;
@@ -189,7 +193,6 @@ public class Lauta {
             this.tietokanta.getKortit().get(i).setAvattu(false);
             this.tietokanta.getKortit().get(i).setLoydetty(false);
         }
-        
         this.parejaLoydetty = 0;
         this.tietokanta.luoSekoitetutKortit(vaikeusaste);
 

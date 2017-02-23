@@ -12,3 +12,5 @@ Muistipelissä kilpailet itseäsi tai kaveriasi vastaan ja yrität arvaamalla ja
 
 [CheckStyle-raportti] (https://htmlpreview.github.io/?https://github.com/CG89/Muistipeli/blob/master/dokumentaatio/Checkstyle/checkstyle.html)
 
+[Käyttöohjeet] (dokumentaatio/kayttoohjeet.md)
+

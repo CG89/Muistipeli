@@ -9,5 +9,6 @@
     <suppress files="Nappikuuntelija.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="Tekstikayttoliittyma.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="Main.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="Menukuuntelija.java" checks="[a-zA-Z0-9]*"/>
 
 </suppressions>

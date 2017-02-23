@@ -1,15 +1,11 @@
 package muistipeli.ohjelmalogiikka;
 
-import java.io.ByteArrayInputStream;
-import java.util.Scanner;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import muistipeli.data.Kortti;
 import muistipeli.data.Tietokanta;
-import muistipeli.ohjelmalogiikka.Lauta;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,42 +13,34 @@ public class LautaTest {
 
     Lauta lauta;
 
-//    @Test
-//    public void lautaKonstruktoriLuoJaTayttaaKortitOikein() {
-//
-//        lauta = new Lauta(3, 2);
-//        assertEquals(6, lauta.getKortitKoko());
-//    }
     @Before
     public void setUp() {
-        lauta=new Lauta(new Tietokanta());
+        lauta = new Lauta(new Tietokanta());
         lauta.uusiPeli(4);
         lauta.getTietokanta().setSekoitetutkortit(lauta.getTietokanta().getKortit());
-        
-    }
 
-    
+    }
 
     @Test
     public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKorttiKaannetty() {
-        
+
         lauta.getTietokanta().getSekoitetutKortit().get(0).setAvattu(true);
         assertEquals("Valitsit saman kortin uudestaan, valitse toinen kortti!", lauta.olikoKorttiJoKaannettyTaiLoydetty(0));
     }
 
     @Test
-    public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKorttiLoydetty() {        
+    public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKorttiLoydetty() {
         lauta.getTietokanta().getSekoitetutKortit().get(0).setLoydetty(true);
         assertEquals("Valitsit jo löydetyn kortin, valitse toinen kortti!", lauta.olikoKorttiJoKaannettyTaiLoydetty(0));
     }
 
     @Test
-    public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKelvollinenKortti() {       
+    public void olikoKorttiJoKaannettyTaiLoydettyPalauttaaOikeanViestinKunKelvollinenKortti() {
         assertEquals("kelvollinen kortti", lauta.olikoKorttiJoKaannettyTaiLoydetty(0));
     }
 
     @Test
-    public void ensimmainenKorttiValittuPalauttaaOikeanViestin() {     
+    public void ensimmainenKorttiValittuPalauttaaOikeanViestin() {
         JButton nappi = new JButton();
         assertEquals("Yritä löytää kääntämällesi kortille pari", lauta.ensimmainenKorttiValittu(0, nappi));
     }
@@ -183,6 +171,91 @@ public class LautaTest {
         lauta.setToinenPainettuNappi(new JButton());
         assertEquals(false, lauta.suljeVanhatAvatutKortit());
     }
+
+    @Test
+    public void suljeVanhatKortitAsettaaEnsimmainenAvattuKorttiAvattuFalseksiKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getEnsimmainenAvattuKortti();
+        lauta.suljeVanhatAvatutKortit();
+        assertEquals(false, kortti.getAvattu());
+    }
+
+    @Test
+    public void suljeVanhatKortitAsettaaToinenAvattuKorttiAvattuFalseksiKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getToinenAvattuKortti();
+        lauta.suljeVanhatAvatutKortit();
+        assertEquals(false, kortti.getAvattu());
+    }
+
+    @Test
+    public void suljeVanhatKortitAsettaaEnsimmainenPainettuKorttiIconinNulliksiKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getEnsimmainenAvattuKortti();
+        lauta.getEnsimmainenPainettuNappi().setIcon(new ImageIcon(kortti.getKuva()));
+        
+        lauta.suljeVanhatAvatutKortit();
+        assertEquals(null, lauta.getEnsimmainenPainettuNappi().getIcon());
+    }
+
+    @Test
+    public void suljeVanhatKortitAsettaaToinenPainettuNappiIconinNulliksiKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getToinenAvattuKortti();
+        lauta.getToinenPainettuNappi().setIcon(new ImageIcon(kortti.getKuva()));
+        lauta.suljeVanhatAvatutKortit();
+        assertEquals(null, lauta.getToinenPainettuNappi().getIcon());
+    }
+
+    @Test
+    public void suljeVanhatKortitAsettaaToinenPainettuNappiTekstinToisenKortinIndeksinMukaanKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getToinenAvattuKortti();
+        lauta.suljeVanhatAvatutKortit();
+        String indeksi = "";
+        indeksi += kortti.getIndeksi();
+        assertEquals(indeksi, lauta.getToinenPainettuNappi().getText());
+    }
+
+    @Test
+    public void suljeVanhatKortitAsettaaEnsimmainenPainettuNappiTekstinEnsimmainenKortinIndeksinMukaanKunEiPari() {
+        lauta.setEnsimmainenPainettuNappi(new JButton());
+        lauta.setToinenPainettuNappi(new JButton());
+        lauta.setEnsimmainenAvattuKortti(lauta.getTietokanta().getKortit().get(0));
+        lauta.setToinenAvattuKortti(lauta.getTietokanta().getKortit().get(2));
+        lauta.getEnsimmainenAvattuKortti().setAvattu(true);
+        lauta.getToinenAvattuKortti().setAvattu(true);
+        Kortti kortti = lauta.getEnsimmainenAvattuKortti();
+        lauta.suljeVanhatAvatutKortit();
+        String indeksi = "";
+        indeksi += kortti.getIndeksi();
+        assertEquals(indeksi, lauta.getEnsimmainenPainettuNappi().getText());
+    }
 //    @Test
 //    public void olikoSamatPalauttaaOikeanTotuusarvonKunKortitSamat() {
 //
@@ -227,5 +300,4 @@ public class LautaTest {
 //    }
 //    
 
-   
 }

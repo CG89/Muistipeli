@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 7,
+      <title>File: 8,
              Errors: 1,
              Warnings: 0,
              Infos: 0
@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#muistipeli.kayttoliittyma.Tekstikayttoliittyma.java">muistipeli/kayttoliittyma/Tekstikayttoliittyma.java</a>
+                  <a href="${project.url}/checkstyle.html#muistipeli.data.Tietokanta.java">muistipeli/data/Tietokanta.java</a>
                 </td>
                 <td>
                   0
@@ -89,6 +89,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#muistipeli.data.Kortti.java">muistipeli/data/Kortti.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#muistipeli.kayttoliittyma.Menukuuntelija.java">muistipeli/kayttoliittyma/Menukuuntelija.java</a>
                 </td>
                 <td>
                   0

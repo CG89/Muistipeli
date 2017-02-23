@@ -16,7 +16,7 @@ public class PelaajaTest {
     public void lisaaYksiVuoroLisaaPelaajalleYhdenVuoron() {
         pelaaja = new Pelaaja();
         pelaaja.lisaaYksiVuoro();
-        assertEquals(1, pelaaja.getPistetilanne());
+        assertEquals(1, pelaaja.getVuoronNumero());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class PelaajaTest {
         pelaaja.lisaaYksiVuoro();
         pelaaja.lisaaYksiVuoro();
         pelaaja.lisaaYksiVuoro();
-        assertEquals(4, pelaaja.getPistetilanne());
+        assertEquals(4, pelaaja.getVuoronNumero());
     }
 
     @Test

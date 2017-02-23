@@ -7,14 +7,20 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import muistipeli.ohjelmalogiikka.Lauta;
 
+/**
+ * Luokka pitää kirjaa korteista.
+ */
 public class Tietokanta {
 
     private ArrayList<Kortti> kortit;
     private ArrayList<String> nimet;
     private ArrayList<Kortti> sekoitetutKortit;
 
+    /**
+     * Konstruktori luo kortit ja nimet -listat ja kutsuu korttienNimienLuonti-,
+     * korttienLuominen- ,korttienIndeksointi-metodeja.
+     */
     public Tietokanta() {
         this.kortit = new ArrayList<>();
         this.nimet = new ArrayList<>();
@@ -24,24 +30,24 @@ public class Tietokanta {
     }
 
     /**
-     * Metodi luo listan nimistä ja laittaa sinne nimiä.
+     * Metodi lisää nimiä nimet-listaan.
      */
     public void korttienNimienLuonti() {
-        nimet.add("♥");
-        nimet.add("웃");
-        nimet.add("☠");
-        nimet.add("✿");
-        nimet.add("☃");
-        nimet.add("☼");
-        nimet.add("☢");
-        nimet.add("☯");
-        nimet.add("✈");
-        nimet.add("✯");
+        nimet.add("A");
+        nimet.add("B");
+        nimet.add("C");
+        nimet.add("D");
+        nimet.add("E");
+        nimet.add("F");
+        nimet.add("G");
+        nimet.add("H");
+        nimet.add("I");
+        nimet.add("J");
     }
 
     /**
-     * Metodi luo kortit-listan, lisää sinne pareittain kortteja, jollai on sama
-     * nimi.
+     * Metodi lisää kortit-listaan pareittain kortteja, jollai on sama nimi ja
+     * kuva.
      */
     public void korttienLuominen() {
 
@@ -57,17 +63,24 @@ public class Tietokanta {
     }
 
     /**
-     * Metodi asettaa kortit-listan korteille indeksit perustuen niiden
+     * Metodi asettaa saamansa listan korteille indeksit perustuen niiden
      * indeksiin listalla.
+     * @param indeksoitavatKortit indeksoitavat kortit
      */
     public void korttienIndeksointi(ArrayList<Kortti> indeksoitavatKortit) {
         for (int i = 0; i < indeksoitavatKortit.size(); i++) {
             indeksoitavatKortit.get(i).setIndeksi(i);
         }
     }
-    
-    public void lisaaKuvaKortille(Kortti kortti,int indeksi){
-        String tiedostonimi="koira"+indeksi+".jpg";
+
+    /**
+     * Metodi lisää saamallensa kortille saamaansa indeksiä apua käyttäen kuvan.
+     *
+     * @param kortti Kortti, jolle kuva annetaan
+     * @param indeksi Integer, jonka avulla valitaan annettava kuva.
+     */
+    public void lisaaKuvaKortille(Kortti kortti, int indeksi) {
+        String tiedostonimi = "koira" + indeksi + ".jpg";
         InputStream is = getClass().getClassLoader().getResourceAsStream(tiedostonimi);
         try {
             kortti.setKuva(ImageIO.read(is));
@@ -75,15 +88,24 @@ public class Tietokanta {
             Logger.getLogger(Kortti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void luoSekoitetutKortit(int vaikeusaste){
-        this.sekoitetutKortit=new ArrayList<>();
-        for (int i = 0; i < vaikeusaste*4; i++) {
+
+    /**
+     * Metodi luo peliä varten kortit-listan korteista uuden
+     * sekoitetutKortit-listan, johon tulee vaikeusastetta vastaava määrä
+     * kortteja. Lopuksi metodi sekoittaa listan kortit ja kutsuu
+     * korttienIndeksointi-metodia.
+     *
+     * @param vaikeusaste Integer, kortteja valitaan nelinkertainen määrä
+     * kortit-listalta sekoitetutKortit-listalle
+     */
+    public void luoSekoitetutKortit(int vaikeusaste) {
+        this.sekoitetutKortit = new ArrayList<>();
+        for (int i = 0; i < vaikeusaste * 4; i++) {
             sekoitetutKortit.add(kortit.get(i));
         }
         Collections.shuffle(sekoitetutKortit);
         korttienIndeksointi(sekoitetutKortit);
-        
+
     }
 
     public ArrayList getNimet() {
@@ -93,12 +115,12 @@ public class Tietokanta {
     public ArrayList<Kortti> getSekoitetutKortit() {
         return this.sekoitetutKortit;
     }
-    
-    public void setSekoitetutkortit(ArrayList<Kortti> kortit){
-        this.sekoitetutKortit=kortit;
+
+    public void setSekoitetutkortit(ArrayList<Kortti> kortit) {
+        this.sekoitetutKortit = kortit;
     }
-    
-    public ArrayList<Kortti> getKortit(){
+
+    public ArrayList<Kortti> getKortit() {
         return this.kortit;
     }
 
