@@ -11,7 +11,7 @@ import muistipeli.ohjelmalogiikka.Lauta;
 public class Main {
 
     public static void main(String[] args) {
-        Lauta lauta=new Lauta(new Tietokanta());
+        Lauta lauta = new Lauta(new Tietokanta());
         lauta.uusiPeli(4);
         GraafinenKayttoliittyma kayttoliittyma = new GraafinenKayttoliittyma(lauta);
         SwingUtilities.invokeLater(kayttoliittyma);

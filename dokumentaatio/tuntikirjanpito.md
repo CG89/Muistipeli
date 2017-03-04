@@ -8,3 +8,4 @@ Päivä | Tunnit | Kuvaus
 17.02.2017 | 10h | Graafisen käyttöliittymän tekoa, javadoc, testejä, sekvenssikaaviot
 22.02.2017 | 6h | Kuvien lisääminen korteille, logiikan ja tietokannan erottaminen
 23.02.2017 | 5h | Testien tekoa, javadoc, sekvenssikaavio ym dokumentaatio
+04.03.2017 | 5h | Loppupalautuksen tekeminen

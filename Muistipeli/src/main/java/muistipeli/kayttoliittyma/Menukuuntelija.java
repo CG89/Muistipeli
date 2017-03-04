@@ -4,14 +4,12 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
-import muistipeli.ohjelmalogiikka.Lauta;
 
 public class Menukuuntelija implements ActionListener {
 
     private JMenuItem menuItem;
     private GraafinenKayttoliittyma gui;
     private int napinNumero;
-    private int vaikeusaste;
 
     public Menukuuntelija(JMenuItem menuItem, GraafinenKayttoliittyma gui) {
         this.menuItem = menuItem;
@@ -26,11 +24,21 @@ public class Menukuuntelija implements ActionListener {
         this.napinNumero = mikaNappi(menuItem);
         if (napinNumero > 2 && napinNumero < 6) {
             gui.getLauta().uusiPeli(napinNumero);
+        }
+        if (napinNumero == 2) {
+            if (gui.getLauta().getPelaajamaara() == 1) {
+                gui.getLauta().setPelaajamaara(2);
+            } else {
+                gui.getLauta().setPelaajamaara(1);
+            }
+            gui.getLauta().uusiPeli(gui.getLauta().getVaikeusaste());
         } else {
             gui.getLauta().uusiPeli(gui.getLauta().getVaikeusaste());
         }
         gui.luoKomponentit(container);
+
         gui.getFrame().pack();
+        gui.getFrame().setTitle("Uusi peli, pelaajia: " + gui.getLauta().getPelaajamaara());
     }
 
     public int mikaNappi(JMenuItem menuItem) {
@@ -46,6 +54,9 @@ public class Menukuuntelija implements ActionListener {
         }
         if (teksti.equals("Vaikea")) {
             return 5;
+        }
+        if (teksti.equals("Kaksinpeli")) {
+            return 2;
         } else {
             return 4;
         }

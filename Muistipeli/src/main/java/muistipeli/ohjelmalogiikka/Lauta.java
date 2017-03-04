@@ -15,16 +15,20 @@ public class Lauta {
     private JButton ensimmainenPainettuNappi;
     private JButton toinenPainettuNappi;
     private int vaikeusaste;
+    private int pelaajamaara;
+    private int vuoronNumero;
     private Tietokanta tietokanta;
 
     /**
      * Konstruktori tallettaa parametrina saamansa Tietokantaolion
-     * oliomuuttujaan.
+     * oliomuuttujaan ja asettaa pelaajamaaran ja vuoron numeron yhdeksi.
      *
      * @param tietokanta Talletettava Tietokantaolio.
      */
     public Lauta(Tietokanta tietokanta) {
         this.tietokanta = tietokanta;
+        this.pelaajamaara = 1;
+        this.vuoronNumero = 1;
     }
 
     /**
@@ -52,16 +56,48 @@ public class Lauta {
             } else {
                 toinenKorttiValittu(kaannetynKortinIndeksi, nappi);
                 if (olikoSamatkortit(ensimmainenAvattuKortti, toinenAvattuKortti)) {
-                    if (parejaLoydetty == this.tietokanta.getSekoitetutKortit().size() / 2) {
-                        return "Voitit pelin, onneksi olkoon!";
-                    }
-                    return "Löysit parin, hienoa!";
+                    return pariLoydetty();
                 } else {
-                    return "Et löytänyt paria";
+                    return pariaEiLoydetty();
                 }
             }
 
         }
+    }
+
+    /**
+     * Metodi lisää tarvittaessa vuoron numeroa yhdellä ja vaihtaa kaksin
+     * pelissä aktiivista pelaajaa.
+     *
+     * @return Viesti kertoo, ettei paria löydetty
+     */
+    public String pariaEiLoydetty() {
+        if (pelaajamaara == 1) {
+            this.vuoronNumero++;
+        } else {
+            if (tietokanta.getAktiivinenPelaaja() == tietokanta.getPelaajat().get(1)) {
+                this.vuoronNumero++;
+            }
+        }
+        if (pelaajamaara == 2) {
+            tietokanta.vaihdaAktiivinenPelaaja();
+        }
+        return "Et löytänyt paria";
+    }
+
+    /**
+     * Metodi tarkistaa, oliko löydetty pari viimeinen ja palauttaa sen mukaan
+     * viestin sekä lisää aktiiviselle pelaajalle pisteen.
+     *
+     * @return palautettava viesti
+     */
+    public String pariLoydetty() {
+        if (parejaLoydetty == this.tietokanta.getSekoitetutKortit().size() / 2) {
+            this.tietokanta.getAktiivinenPelaaja().lisaaYksiPiste();
+            return "Voitit pelin, onneksi olkoon!";
+        }
+        this.tietokanta.getAktiivinenPelaaja().lisaaYksiPiste();
+        return "Löysit parin, hienoa!";
     }
 
     /**
@@ -163,9 +199,9 @@ public class Lauta {
             ensimmainenAvattuKortti.setAvattu(false);
             toinenAvattuKortti.setAvattu(false);
             ensimmainenPainettuNappi.setIcon(null);
-            ensimmainenPainettuNappi.setText("" + ensimmainenAvattuKortti.getIndeksi());
+            ensimmainenPainettuNappi.setText("" + (ensimmainenAvattuKortti.getIndeksi() + 1));
             toinenPainettuNappi.setIcon(null);
-            toinenPainettuNappi.setText("" + toinenAvattuKortti.getIndeksi());
+            toinenPainettuNappi.setText("" + (toinenAvattuKortti.getIndeksi() + 1));
             ensimmainenAvattuKortti = null;
             toinenAvattuKortti = null;
             return true;
@@ -177,9 +213,10 @@ public class Lauta {
     /**
      * Metodi alustaa uuden pelin asettamalla vaikeusasteeksi saamansa
      * parametrin, asettamalla nulliksi laudan kortti- ja nappioliomuuttujat,
-     * asettamalla falseksi Tietokannan kortit-listan korttien avattu- ja
-     * löydettytilat, asettamalla parejaLöydetty nollaksi ja kutsumalla
-     * Tietokantaluokan metodia luoSekoitetutKortit(int vaikeusaste).
+     * asettamalla vuoron numeron yhdeksi, asettamalla aktiiviseksi pelaajaksi
+     * pelaaja 1, asettamalla falseksi Tietokannan kortit-listan korttien
+     * avattu- ja löydettytilat, asettamalla parejaLöydetty nollaksi ja
+     * kutsumalla Tietokantaluokan metodia luoSekoitetutKortit(int vaikeusaste).
      *
      * @param vaikeusaste Talletettava vaikeusaste
      */
@@ -189,6 +226,9 @@ public class Lauta {
         this.ensimmainenPainettuNappi = null;
         this.toinenAvattuKortti = null;
         this.toinenPainettuNappi = null;
+        this.vuoronNumero = 1;
+        this.tietokanta.setAktiivinenPelaaja(this.tietokanta.getPelaajat().get(0));
+        this.tietokanta.nollaaPelaajienPisteet();
         for (int i = 0; i < this.tietokanta.getKortit().size(); i++) {
             this.tietokanta.getKortit().get(i).setAvattu(false);
             this.tietokanta.getKortit().get(i).setLoydetty(false);
@@ -246,4 +286,15 @@ public class Lauta {
         return this.tietokanta;
     }
 
+    public void setPelaajamaara(int pelaajia) {
+        this.pelaajamaara = pelaajia;
+    }
+
+    public int getPelaajamaara() {
+        return this.pelaajamaara;
+    }
+
+    public int getVuoronNumero() {
+        return this.vuoronNumero;
+    }
 }

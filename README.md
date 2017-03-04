@@ -1,6 +1,6 @@
 # Muistipeli
 
-Muistipelissä kilpailet itseäsi tai kaveriasi vastaan ja yrität arvaamalla ja muistamalla löytää korttien seasta oikeat parit. 
+Muistipelissä kilpailet itseäsi tai kaveriasi vastaan ja yrität arvaamalla ja muistamalla löytää korttien seasta oikeat parit.
 
 ## Dokumentaatio
 

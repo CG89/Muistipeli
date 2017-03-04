@@ -9,17 +9,20 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- * Luokka pitää kirjaa korteista.
+ * Luokka pitää kirjaa Kortti- ja Pelaajaolioista.
  */
 public class Tietokanta {
 
     private ArrayList<Kortti> kortit;
     private ArrayList<String> nimet;
     private ArrayList<Kortti> sekoitetutKortit;
+    private ArrayList<Pelaaja> pelaajat;
+    private Pelaaja aktiivinenPelajaa;
 
     /**
-     * Konstruktori luo kortit ja nimet -listat ja kutsuu korttienNimienLuonti-,
-     * korttienLuominen- ,korttienIndeksointi-metodeja.
+     * Konstruktori luo kortit- ja nimet -listat ja kutsuu
+     * korttienNimienLuonti-, korttienLuominen- ,korttienIndeksointi-metodeja
+     * sekä luoPelaajat()-metodia.
      */
     public Tietokanta() {
         this.kortit = new ArrayList<>();
@@ -27,6 +30,18 @@ public class Tietokanta {
         korttienNimienLuonti();
         korttienLuominen();
         korttienIndeksointi(kortit);
+        luoPelaajat();
+    }
+
+    /**
+     * Metodi luo pelaajat listan ja laittaa sinne kaksi Pelaaja-oliota ja
+     * asettaa ensimmäisen Pelaaja-olion aktiiviseksi pelaajaksi.
+     */
+    public void luoPelaajat() {
+        this.pelaajat = new ArrayList<>();
+        pelaajat.add(new Pelaaja("Pelaaja 1"));
+        pelaajat.add(new Pelaaja("Pelaaja 2"));
+        this.aktiivinenPelajaa = pelaajat.get(0);
     }
 
     /**
@@ -65,6 +80,7 @@ public class Tietokanta {
     /**
      * Metodi asettaa saamansa listan korteille indeksit perustuen niiden
      * indeksiin listalla.
+     *
      * @param indeksoitavatKortit indeksoitavat kortit
      */
     public void korttienIndeksointi(ArrayList<Kortti> indeksoitavatKortit) {
@@ -108,6 +124,28 @@ public class Tietokanta {
 
     }
 
+    /**
+     * Metodi vaihtaa pelaajat-listalta ei-aktiivisen pelaajan aktiiviseksi
+     * pelaajaksi.
+     */
+    public void vaihdaAktiivinenPelaaja() {
+        for (Pelaaja pelaaja : pelaajat) {
+            if (pelaaja != aktiivinenPelajaa) {
+                aktiivinenPelajaa = pelaaja;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Metodi nollaa pelaajien pisteet.
+     */
+    public void nollaaPelaajienPisteet() {
+        for (Pelaaja pelaaja : pelaajat) {
+            pelaaja.setPistetilanne(0);
+        }
+    }
+
     public ArrayList getNimet() {
         return this.nimet;
     }
@@ -122,6 +160,18 @@ public class Tietokanta {
 
     public ArrayList<Kortti> getKortit() {
         return this.kortit;
+    }
+
+    public void setAktiivinenPelaaja(Pelaaja pelaaja) {
+        this.aktiivinenPelajaa = pelaaja;
+    }
+
+    public Pelaaja getAktiivinenPelaaja() {
+        return this.aktiivinenPelajaa;
+    }
+
+    public ArrayList<Pelaaja> getPelaajat() {
+        return this.pelaajat;
     }
 
 }

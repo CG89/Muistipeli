@@ -7,21 +7,22 @@ public class Pelaaja {
 
     private String nimi;
     private int pistetilanne;
-    private int vuoronNumero;
-    private boolean voittiko;
 
     /**
-     * Konstruktori luo pelaajan.
+     * Konstruktori luo pelaajan ja antaa sille parametrina saamansa nimen
+     * nimeksi ja asettaa vuoron numeroksi 1.
+     *
+     * @param nimi talletettava nimi
      */
-    public Pelaaja() {
-
+    public Pelaaja(String nimi) {
+        this.nimi = nimi;
     }
 
     /**
-     * Metodi lisää yhdellä vuoronNumero-oliomuuttujan lukua.
+     * Metodi lisää yhdellä pistetilanne-oliomuuttujan lukua.
      */
-    public void lisaaYksiVuoro() {
-        vuoronNumero++;
+    public void lisaaYksiPiste() {
+        pistetilanne++;
     }
 
     public void setNimi(String nimi) {
@@ -40,20 +41,8 @@ public class Pelaaja {
         return pistetilanne;
     }
 
-    public boolean getVoittiko() {
-        return voittiko;
-    }
-
-    public void setVoittiko(boolean t) {
-        voittiko = t;
-    }
-
-    public int getVuoronNumero() {
-        return this.vuoronNumero;
-    }
-
     @Override
     public String toString() {
-        return nimi + " vuoro #" + pistetilanne;
+        return nimi;
     }
 }
